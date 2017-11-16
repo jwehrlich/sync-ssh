@@ -1,0 +1,47 @@
+#!/bin/bash
+
+LISTEN_PORT=5557
+SSH_PART=$1
+
+SyncSystem(){
+  # Lets Sync Local with Remote
+  cd $SYNC_SSH_LOCAL_PATH
+
+  # make sure that we can qpop locally
+  if (($(hg diff | wc -l) > 0)); then BASIC_SSH=true; fi
+
+  #make sure that we can qpop remotely
+  if (($(ssh ${SSH_PART} "cd $SYNC_SSH_REMOTE_PATH && hg diff" | wc -l) > 0)); then
+    BASIC_SSH=true
+  fi
+
+  if [ -n "$BASIC_SSH" ]; then
+    echo "Cannot sync until remote/local systems have had their diff saved"
+  else
+    hg qpop -a
+    ssh ${SSH_PART} "cd $SYNC_SSH_REMOTE_PATH && hg qpop -a"
+    osync/osync.sh --initiator="${SYNC_SSH_LOCAL_PATH}/.hg/patches" --target="ssh://${SSH_PART}//${SYNC_SSH_REMOTE_PATH}/.hg/patches"
+  fi
+}
+
+SyncSystem
+
+# kill -9 $(lsof -t -i:${LISTEN_PORT})
+while (true); do nc -l ${LISTEN_PORT} | pbcopy; done &
+pid=$!
+
+echo "Background Process ID: $pid"
+
+# If this script is killed, kill the 'clipboard_service'.
+trap "kill -9 $pid 2> /dev/null" EXIT
+
+ssh ${SSH_PART} -R ${LISTEN_PORT}:localhost:${LISTEN_PORT}
+
+echo "Killing background task: $pid"
+kill -9 $pid
+
+# Lets Sync Local with Remote
+SyncSystem
+
+# Disable the trap on a normal exit.
+trap - EXIT
