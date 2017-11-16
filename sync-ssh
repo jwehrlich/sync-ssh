@@ -20,7 +20,7 @@ SyncSystem(){
   else
     hg qpop -a
     ssh ${SSH_PART} "cd $SYNC_SSH_REMOTE_PATH && hg qpop -a"
-    osync/osync.sh --initiator="${SYNC_SSH_LOCAL_PATH}/.hg/patches" --target="ssh://${SSH_PART}//${SYNC_SSH_REMOTE_PATH}/.hg/patches"
+    osync.sh --initiator="${SYNC_SSH_LOCAL_PATH}/.hg/patches" --target="ssh://${SSH_PART}/${SYNC_SSH_REMOTE_PATH}/.hg/patches"
   fi
 }
 
