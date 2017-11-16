@@ -9,7 +9,6 @@ Installation
 ```
 git clone git@github.com:byepolr/sync-ssh.git ~/.sync-ssh
 cd ~/.sync-ssh && git submodule init && git submodule update
-cd ~/.sync-ssh/osync && git reset --hard b6ad2f2552cfb527c1d14d8a244ee10e7fde49f1
 ln -s ~/.sync-ssh/sync-ssh /usr/local/bin/sync-ssh
 ln -s ~/.sync-ssh/osync/osync.sh /usr/local/bin/osync.sh
 ```
