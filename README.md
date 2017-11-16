@@ -9,7 +9,6 @@ Installation
 ```
 git clone git@github.com:byepolr/sync-ssh.git ~/.sync-ssh
 ln -s ~/.sync-ssh/sync-ssh /usr/local/bin/sync-ssh
-. ~/.bashrc
 ```
 
 Add the following to your .bashrc or .zshrc
@@ -18,6 +17,7 @@ Add the following to your .bashrc or .zshrc
 export SYNC_SSH_LOCAL_PATH=/path/to/local/mecurial/repo
 export SYNC_SSH_REMOTE_PATH=/path/to/remote/mecurial/repo
 ```
+update your *.bashr* `. ~/.bashrc`  or *.zshrc* `. ~/.zshrc` file
 
 Usage
 =====
