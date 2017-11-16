@@ -8,7 +8,7 @@ Installation
 ============
 ```
 git clone git@github.com:byepolr/sync-ssh.git ~/.sync-ssh
-ln -s ~/sync-ssh/sync-ssh /usr/local/bin/sync-ssh
+ln -s ~/.sync-ssh/sync-ssh /usr/local/bin/sync-ssh
 . ~/.bashrc
 ```
 
