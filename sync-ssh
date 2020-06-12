@@ -3,6 +3,12 @@
 LISTEN_PORT=5557
 SSH_PART=$1
 
+# When a connection is killed due to a network connection lost, we
+# can still have an active connection from this script. We need to
+# kill the process so that we don't have communication issues. One
+# of the common issues is the loss of the copy buffere working
+lsof -t -i tcp:${LISTEN_PORT} | xargs kill
+
 SyncSystem(){
   # Lets Sync Local with Remote
   cd $SYNC_SSH_LOCAL_PATH
